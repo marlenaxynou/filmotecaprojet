@@ -1,0 +1,14 @@
+{
+    "name": "filmoteca/filmoteca",
+    "description": "Filmoteca project",
+    "type": "project",
+    "authors": [{
+        "name": "Eleni Margarita XYNOU"
+    }],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
