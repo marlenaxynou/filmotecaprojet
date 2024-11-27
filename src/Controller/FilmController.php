@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -23,7 +22,7 @@ class FilmController
     {
         // Connexion à la base de données via la méthode de connexion
         $pdo = DatabaseConnection::getConnection();
-        
+
         // Exécution de la requête SQL pour récupérer tous les films
         $stmt = $pdo->query("SELECT * FROM films");
         $films = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -32,7 +31,7 @@ class FilmController
         echo $this->twig->render('list.html.twig', ['films' => $films]);
     }
 
-    // Méthode pour créer un film (ajoutée pour exemple)
+    // Méthode pour créer un film
     public function create()
     {
         echo "Création d'un film";
@@ -43,7 +42,7 @@ class FilmController
     {
         $filmRepository = new FilmRepository();
         $film = $filmRepository->find((int) $queryParams['id']);
-        
+
         // Affichage du film avec dd() (debugging)
         dd($film);
     }
@@ -60,25 +59,3 @@ class FilmController
         echo "Suppression d'un film";
     }
 }
-=======
-namespace App\Controller;
-
-class FilmController
-{
-    public function create()
-    {
-    }
-
-    public function read()
-    {
-    }
-
-    public function update()
-    {
-    }
-
-    public function delete()
-    {
-    }
-}
->>>>>>> 52ac463aef3ea72da70d1df598fda5d10906e65b
