@@ -57,85 +57,113 @@ class __TwigTemplate_0f75339a42ef27f0bde58add939616fe extends Template
     {
         $macros = $this->macros;
         // line 4
-        yield "\tDétails du Film -
-\t";
-        // line 5
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "title", [], "any", false, false, false, 5), "html", null, true);
+        yield "    Détails du Film - ";
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "title", [], "any", false, false, false, 4), "html", null, true);
         yield "
 ";
         yield from [];
     }
 
-    // line 8
+    // line 7
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_stylesheet(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 9
-        yield "\t<link rel=\"stylesheet\" href=\"/style/style2.css\">
+        // line 8
+        yield "    <!-- Bootstrap CSS -->
+    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH\" crossorigin=\"anonymous\">
+    <link rel=\"stylesheet\" href=\"/style/style2.css\">
 ";
         yield from [];
     }
 
-    // line 12
+    // line 13
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_body(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 13
-        yield "\t<div class=\"detailsFilm\">
-\t\t<h1>Détails du Film :
-\t\t\t<br>
-\t\t\t<a>";
-        // line 16
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "title", [], "any", false, false, false, 16), "html", null, true);
-        yield "</a>
-\t\t</h1>
-\t\t<ul>
-\t\t\t<li>
-\t\t\t\t<strong>ID :</strong>
-\t\t\t\t";
-        // line 21
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "id", [], "any", false, false, false, 21), "html", null, true);
-        yield "</li>
-\t\t\t<li>
-\t\t\t\t<strong>Titre :</strong>
-\t\t\t\t";
-        // line 24
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "title", [], "any", false, false, false, 24), "html", null, true);
-        yield "</li>
-\t\t\t<li>
-\t\t\t\t<strong>Année :</strong>
-\t\t\t\t";
-        // line 27
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "year", [], "any", false, false, false, 27), "html", null, true);
-        yield "</li>
-\t\t\t<li>
-\t\t\t\t<strong>Genre :</strong>
-\t\t\t\t";
-        // line 30
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "type", [], "any", false, false, false, 30), "html", null, true);
-        yield "</li>
-\t\t\t<li>
-\t\t\t\t<strong>Synopsis :</strong>
-\t\t\t\t";
-        // line 33
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "synopsis", [], "any", false, false, false, 33), "html", null, true);
-        yield "</li>
-\t\t\t<li>
-\t\t\t\t<strong>Réalisateur :</strong>
-\t\t\t\t";
-        // line 36
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "director", [], "any", false, false, false, 36), "html", null, true);
-        yield "</li>
-\t\t</ul>
+        // line 14
+        yield "<div class=\"container mt-5\">
+    <!-- En-tête avec titre principal -->
+    <div class=\"row mb-4\">
+        <div class=\"col text-center\">
+            <h1 class=\"text-primary display-4\">Détails du Film</h1>
+            <p class=\"text-muted\">Découvrez toutes les informations sur le film sélectionné</p>
+        </div>
+    </div>
 
-\t\t<a href=\"/films\" class=\"btnActions vert\">Retour à la liste des films</a>
-\t</div>
+    <!-- Carte des détails du film -->
+    <div class=\"card shadow-lg\">
+        <div class=\"card-header bg-dark text-light\">
+            <h2 class=\"mb-0\">";
+        // line 26
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "title", [], "any", false, false, false, 26), "html", null, true);
+        yield "</h2>
+        </div>
+        <div class=\"card-body\">
+            <ul class=\"list-group list-group-flush\">
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>ID :</strong>
+                    <span>";
+        // line 32
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "id", [], "any", false, false, false, 32), "html", null, true);
+        yield "</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Titre :</strong>
+                    <span>";
+        // line 36
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "title", [], "any", false, false, false, 36), "html", null, true);
+        yield "</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Année :</strong>
+                    <span>";
+        // line 40
+        (( !(null === CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "year", [], "any", false, false, false, 40))) ? (yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "year", [], "any", false, false, false, 40), "html", null, true)) : (yield "N/A"));
+        yield "</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Genre :</strong>
+                    <span>";
+        // line 44
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "type", [], "any", false, false, false, 44), "html", null, true);
+        yield "</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Synopsis :</strong>
+                    <span>";
+        // line 48
+        (( !(null === CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "synopsis", [], "any", false, false, false, 48))) ? (yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "synopsis", [], "any", false, false, false, 48), "html", null, true)) : (yield "Aucun synopsis disponible."));
+        yield "</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Réalisateur :</strong>
+                    <span>";
+        // line 52
+        (( !(null === CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "director", [], "any", false, false, false, 52))) ? (yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "director", [], "any", false, false, false, 52), "html", null, true)) : (yield "Inconnu"));
+        yield "</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Créé le :</strong>
+                    <span>";
+        // line 56
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, ($context["film"] ?? null), "created_at", [], "any", false, false, false, 56), "d/m/Y H:i"), "html", null, true);
+        yield "</span>
+                </li>
+            </ul>
+        </div>
+        <div class=\"card-footer text-center\">
+            <a href=\"/films/list\" class=\"btn btn-success\">
+                Retour à la liste des films
+            </a>
+        </div>
+    </div>
+</div>
 ";
         yield from [];
     }
@@ -161,7 +189,7 @@ class __TwigTemplate_0f75339a42ef27f0bde58add939616fe extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  133 => 36,  127 => 33,  121 => 30,  115 => 27,  109 => 24,  103 => 21,  95 => 16,  90 => 13,  83 => 12,  77 => 9,  70 => 8,  63 => 5,  60 => 4,  53 => 3,  42 => 1,);
+        return array (  155 => 56,  148 => 52,  141 => 48,  134 => 44,  127 => 40,  120 => 36,  113 => 32,  104 => 26,  90 => 14,  83 => 13,  75 => 8,  68 => 7,  60 => 4,  53 => 3,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -169,43 +197,70 @@ class __TwigTemplate_0f75339a42ef27f0bde58add939616fe extends Template
         return new Source("{% extends 'homepage.html.twig' %}
 
 {% block title %}
-\tDétails du Film -
-\t{{ film.title }}
+    Détails du Film - {{ film.title }}
 {% endblock %}
 
 {% block stylesheet %}
-\t<link rel=\"stylesheet\" href=\"/style/style2.css\">
+    <!-- Bootstrap CSS -->
+    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH\" crossorigin=\"anonymous\">
+    <link rel=\"stylesheet\" href=\"/style/style2.css\">
 {% endblock %}
 
 {% block body %}
-\t<div class=\"detailsFilm\">
-\t\t<h1>Détails du Film :
-\t\t\t<br>
-\t\t\t<a>{{ film.title }}</a>
-\t\t</h1>
-\t\t<ul>
-\t\t\t<li>
-\t\t\t\t<strong>ID :</strong>
-\t\t\t\t{{ film.id }}</li>
-\t\t\t<li>
-\t\t\t\t<strong>Titre :</strong>
-\t\t\t\t{{ film.title }}</li>
-\t\t\t<li>
-\t\t\t\t<strong>Année :</strong>
-\t\t\t\t{{ film.year }}</li>
-\t\t\t<li>
-\t\t\t\t<strong>Genre :</strong>
-\t\t\t\t{{ film.type }}</li>
-\t\t\t<li>
-\t\t\t\t<strong>Synopsis :</strong>
-\t\t\t\t{{ film.synopsis }}</li>
-\t\t\t<li>
-\t\t\t\t<strong>Réalisateur :</strong>
-\t\t\t\t{{ film.director }}</li>
-\t\t</ul>
+<div class=\"container mt-5\">
+    <!-- En-tête avec titre principal -->
+    <div class=\"row mb-4\">
+        <div class=\"col text-center\">
+            <h1 class=\"text-primary display-4\">Détails du Film</h1>
+            <p class=\"text-muted\">Découvrez toutes les informations sur le film sélectionné</p>
+        </div>
+    </div>
 
-\t\t<a href=\"/films\" class=\"btnActions vert\">Retour à la liste des films</a>
-\t</div>
-{% endblock %}", "films/detail.html.twig", "/var/www/filmoteca/src/views/films/detail.html.twig");
+    <!-- Carte des détails du film -->
+    <div class=\"card shadow-lg\">
+        <div class=\"card-header bg-dark text-light\">
+            <h2 class=\"mb-0\">{{ film.title }}</h2>
+        </div>
+        <div class=\"card-body\">
+            <ul class=\"list-group list-group-flush\">
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>ID :</strong>
+                    <span>{{ film.id }}</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Titre :</strong>
+                    <span>{{ film.title }}</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Année :</strong>
+                    <span>{{ film.year is not null ? film.year : 'N/A' }}</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Genre :</strong>
+                    <span>{{ film.type }}</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Synopsis :</strong>
+                    <span>{{ film.synopsis is not null ? film.synopsis : 'Aucun synopsis disponible.' }}</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Réalisateur :</strong>
+                    <span>{{ film.director is not null ? film.director : 'Inconnu' }}</span>
+                </li>
+                <li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                    <strong>Créé le :</strong>
+                    <span>{{ film.created_at|date('d/m/Y H:i') }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class=\"card-footer text-center\">
+            <a href=\"/films/list\" class=\"btn btn-success\">
+                Retour à la liste des films
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+", "films/detail.html.twig", "/var/www/filmoteca/src/views/films/detail.html.twig");
     }
 }
