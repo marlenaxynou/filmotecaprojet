@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 // Inclure l'autoload de Composer
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -38,3 +39,11 @@ switch ($requestUri) {
         echo "Page introuvable!";
         break;
 }
+=======
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\Core\Router;
+
+$router = new Router();
+$router->route();
+>>>>>>> 52ac463aef3ea72da70d1df598fda5d10906e65b

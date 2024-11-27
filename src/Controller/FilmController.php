@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -59,3 +60,25 @@ class FilmController
         echo "Suppression d'un film";
     }
 }
+=======
+namespace App\Controller;
+
+class FilmController
+{
+    public function create()
+    {
+    }
+
+    public function read()
+    {
+    }
+
+    public function update()
+    {
+    }
+
+    public function delete()
+    {
+    }
+}
+>>>>>>> 52ac463aef3ea72da70d1df598fda5d10906e65b
