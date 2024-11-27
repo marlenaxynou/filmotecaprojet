@@ -2,41 +2,75 @@
 
 namespace App\Controller;
 
+use PDO;
+
 class FilmController
 {
     private $twig;
     private $pdo;
 
+    // Constructeur pour injecter Twig et PDO
     public function __construct($twig, $pdo)
     {
         $this->twig = $twig;
         $this->pdo = $pdo;
     }
 
-    public function listFilms(array $queryParams)
+    // Méthode pour afficher la liste des films
+    public function list(array $queryParams = []): void
     {
-        $films = $this->pdo->query("SELECT * FROM movie")->fetchAll(\PDO::FETCH_ASSOC);
-        echo $this->twig->render('films.html.twig', ['films' => $films]);
+        try {
+            // Récupération de tous les films dans la base de données
+            $stmt = $this->pdo->query("SELECT * FROM films");
+            $films = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Rendu de la vue Twig avec les données des films
+            echo $this->twig->render('films/list.html.twig', ['films' => $films]);
+        } catch (\Exception $e) {
+            // Gestion des erreurs avec un message approprié
+            echo "Une erreur s'est produite lors de la récupération des films : " . $e->getMessage();
+        }
     }
 
-    public function create()
+    // Méthode pour créer un film
+    public function create(): void
     {
         echo "Création d'un film";
     }
 
-    public function read(array $queryParams)
+    // Méthode pour lire un film spécifique
+    public function read(array $queryParams): void
     {
-        $filmRepository = new FilmRepository($this->pdo);
-        $film = $filmRepository->find((int) $queryParams['id']);
-        echo $this->twig->render('film.html.twig', ['film' => $film]);
+        if (!isset($queryParams['id'])) {
+            echo "ID du film manquant";
+            return;
+        }
+
+        try {
+            $id = (int)$queryParams['id'];
+            $stmt = $this->pdo->prepare("SELECT * FROM films WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+            $film = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$film) {
+                echo "Film non trouvé.";
+                return;
+            }
+
+            echo $this->twig->render('films/detail.html.twig', ['film' => $film]);
+        } catch (\Exception $e) {
+            echo "Une erreur s'est produite lors de la récupération du film : " . $e->getMessage();
+        }
     }
 
-    public function update()
+    // Méthode pour mettre à jour un film
+    public function update(): void
     {
         echo "Mise à jour d'un film";
     }
 
-    public function delete()
+    // Méthode pour supprimer un film
+    public function delete(): void
     {
         echo "Suppression d'un film";
     }

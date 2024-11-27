@@ -1,0 +1,6 @@
+<h1>Liste des films</h1>
+<ul>
+    {% for film in films %}
+        <li><a href="/films/read?id={{ film.id }}">{{ film.title }}</a></li>
+    {% endfor %}
+</ul>

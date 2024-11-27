@@ -21,9 +21,9 @@ class Router
         $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
         // Découpe l'URI pour obtenir la route et l'action
-        $parts = explode('/', $uri); // Exemple : ['films', 'create']
+        $parts = explode('/', $uri); // Exemple : ['films', 'list']
         $route = $parts[0] ?? null;   // 'films'
-        $action = $parts[1] ?? 'listFilms'; // 'create' ou par défaut 'listFilms'
+        $action = $parts[1] ?? 'listFilms'; // 'list' ou par défaut 'listFilms'
 
         // Récupère les paramètres éventuels de la query string (comme ?id=12&name=Inception)
         $queryParams = $_GET;
