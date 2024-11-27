@@ -18,7 +18,9 @@ class Film
 
     public function getId(): int
     {
-        return $this->id;
+        $query = $this->db->prepare("SELECT * FROM films WHERE id = :id");
+        $query->execute(['id' => $id]);
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
     public function setId(int $id): self
