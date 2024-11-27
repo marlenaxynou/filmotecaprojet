@@ -1,59 +1,41 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controller;
-
-use App\Core\DatabaseConnection;
-use Twig\Environment;
 
 class FilmController
 {
     private $twig;
+    private $pdo;
 
-    // Le constructeur qui reçoit l'instance de Twig
-    public function __construct(Environment $twig)
+    public function __construct($twig, $pdo)
     {
         $this->twig = $twig;
+        $this->pdo = $pdo;
     }
 
-    // Méthode pour afficher la liste des films
-    public function listFilms()
+    public function listFilms(array $queryParams)
     {
-        // Connexion à la base de données via la méthode de connexion
-        $pdo = DatabaseConnection::getConnection();
-
-        // Exécution de la requête SQL pour récupérer tous les films
-        $stmt = $pdo->query("SELECT * FROM films");
-        $films = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        // Rendu du template Twig avec la liste des films
-        echo $this->twig->render('list.html.twig', ['films' => $films]);
+        $films = $this->pdo->query("SELECT * FROM movie")->fetchAll(\PDO::FETCH_ASSOC);
+        echo $this->twig->render('films.html.twig', ['films' => $films]);
     }
 
-    // Méthode pour créer un film
     public function create()
     {
         echo "Création d'un film";
     }
 
-    // Méthode pour lire un film spécifique
     public function read(array $queryParams)
     {
-        $filmRepository = new FilmRepository();
+        $filmRepository = new FilmRepository($this->pdo);
         $film = $filmRepository->find((int) $queryParams['id']);
-
-        // Affichage du film avec dd() (debugging)
-        dd($film);
+        echo $this->twig->render('film.html.twig', ['film' => $film]);
     }
 
-    // Méthode pour mettre à jour un film
     public function update()
     {
         echo "Mise à jour d'un film";
     }
 
-    // Méthode pour supprimer un film
     public function delete()
     {
         echo "Suppression d'un film";

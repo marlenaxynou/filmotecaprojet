@@ -3,28 +3,18 @@
     "description": "Filmoteca project",
     "type": "project",
     "authors": [{
-<<<<<<< HEAD
         "name": "Eleni Margarita XYONOU"
     }],
-=======
-        "name": "Eleni Margarita XYNOU"
-    }],
-    "require": {},
->>>>>>> 52ac463aef3ea72da70d1df598fda5d10906e65b
+    "require": {
+        "twig/twig": "^3.15",
+        "vlucas/phpdotenv": "^5.6"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "src/"
         }
-<<<<<<< HEAD
     },
     "require-dev": {
         "symfony/var-dumper": "^7.1"
-    },
-    "require": {
-        "twig/twig": "^3.15"
     }
 }
-=======
-    }
-}
->>>>>>> 52ac463aef3ea72da70d1df598fda5d10906e65b

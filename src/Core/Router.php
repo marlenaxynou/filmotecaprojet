@@ -6,6 +6,15 @@ namespace App\Core;
 
 class Router
 {
+    private $twig;
+    private $pdo;
+
+    public function __construct($twig, $pdo)
+    {
+        $this->twig = $twig;
+        $this->pdo = $pdo;
+    }
+
     public function route(): void
     {
         // Récupère l'URL demandée (sans le domaine et la racine)
@@ -34,7 +43,7 @@ class Router
                 return;
             }
 
-            $controller = new $controllerName();
+            $controller = new $controllerName($this->twig, $this->pdo);
 
             // Vérifie si la méthode existe dans le contrôleur
             if (method_exists($controller, $action)) {

@@ -11,7 +11,7 @@ class BaseController
 
     public function __construct()
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../views');
+        $loader = new FilesystemLoader(__DIR__ . '/views');
         $this->twig = new Environment($loader);
     }
 }

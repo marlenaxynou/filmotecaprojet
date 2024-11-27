@@ -4,42 +4,46 @@ DOCKER_PHP_CONTAINER=filmoteca_php
 
 # Start the containers in the background
 up:
-	docker compose -f $(DOCKER_COMPOSE_FILEPATH) up -d
+	# Start the containers in detached mode
+	docker-compose -f $(DOCKER_COMPOSE_FILEPATH) up -d
 
 # Stop the containers
 down:
-	docker compose -f $(DOCKER_COMPOSE_FILEPATH) down
+	# Stop all containers
+	docker-compose -f $(DOCKER_COMPOSE_FILEPATH) down
 
 # Recreate the containers (useful after modifying the Dockerfile)
 build:
-	docker compose -f $(DOCKER_COMPOSE_FILEPATH) up --build -d
+	# Rebuild and restart containers
+	docker-compose -f $(DOCKER_COMPOSE_FILEPATH) up --build -d
 
 # View the logs of the containers
 logs:
-	docker compose -f $(DOCKER_COMPOSE_FILEPATH) logs -f
+	# Show logs for all containers
+	docker-compose -f $(DOCKER_COMPOSE_FILEPATH) logs
 
-# View the status of the containers
-status:
-	docker compose -f $(DOCKER_COMPOSE_FILEPATH) ps
+# Start the containers (alias for up)
+start: up
 
-# Remove the containers, networks, volumes, and images created by up
-clean:
-	docker compose -f $(DOCKER_COMPOSE_FILEPATH) down --volumes --remove-orphans
-
-# Restart the containers
-restart: down up
-
-# Connect to the PHP container
-start:
-	docker exec -it $(DOCKER_PHP_CONTAINER) /bin/bash
+# Stop the containers (alias for down)
+stop: down
 
 # Run composer install
 composer-install:
+	# Run composer install inside the PHP container
 	docker exec $(DOCKER_PHP_CONTAINER) composer install
-<<<<<<< HEAD
 
-# Regénérer l'autoloading de Composer
+# Regenerate Composer autoload files
 dump-autoload:
+	# Regenerate the Composer autoload files
 	docker exec $(DOCKER_PHP_CONTAINER) composer dump-autoload
-=======
->>>>>>> 52ac463aef3ea72da70d1df598fda5d10906e65b
+
+# Access the container shell
+shell:
+	# Open an interactive bash shell in the PHP container
+	docker exec -it $(DOCKER_PHP_CONTAINER) /bin/bash
+
+# Inspect the container
+inspect:
+	# Inspect the PHP container
+	docker inspect $(DOCKER_PHP_CONTAINER)
