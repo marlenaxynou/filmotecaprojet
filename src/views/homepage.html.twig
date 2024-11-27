@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}Filmoteca{% endblock %}
+    </title>
+    <link rel="stylesheet" href="/style/style1.css">
+    {% block stylesheet %}{% endblock %}
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/films" class="nav-link">Films</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Copyright © 2024 Filmoteca. All rights reserved.</p>
+    </footer>
+
+    <script src="/scripts/navigation.js"></script>
+
+</body>
+
+</html>
