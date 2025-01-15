@@ -84,7 +84,6 @@ class __TwigTemplate_5154cd0b186e0498e0ee8722333e9ab1 extends Template
         <p>Copyright © 2024 Filmoteca. All rights reserved.</p>
     </footer>
 
-    <script src=\"/scripts/navigation.js\"></script>
 
 </body>
 
@@ -136,7 +135,7 @@ class __TwigTemplate_5154cd0b186e0498e0ee8722333e9ab1 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  117 => 27,  107 => 11,  96 => 8,  81 => 28,  79 => 27,  62 => 12,  60 => 11,  56 => 9,  54 => 8,  45 => 1,);
+        return array (  116 => 27,  106 => 11,  95 => 8,  81 => 28,  79 => 27,  62 => 12,  60 => 11,  56 => 9,  54 => 8,  45 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -174,7 +173,6 @@ class __TwigTemplate_5154cd0b186e0498e0ee8722333e9ab1 extends Template
         <p>Copyright © 2024 Filmoteca. All rights reserved.</p>
     </footer>
 
-    <script src=\"/scripts/navigation.js\"></script>
 
 </body>
 

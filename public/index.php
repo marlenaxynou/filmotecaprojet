@@ -31,5 +31,6 @@ try {
 }
 
 // FRONT-CONTROLLER
-$router = new Router($twig, $pdo); // Pass Twig and PDO instances to the Router
+// FRONT-CONTROLLER
+$router = new Router($pdo, $twig); // Pass PDO and Twig instances to the Router in the correct order
 $router->route(); // Call the route() method to handle incoming requests

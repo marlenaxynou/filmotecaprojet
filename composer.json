@@ -3,7 +3,7 @@
     "description": "Filmoteca project",
     "type": "project",
     "authors": [{
-        "name": "Eleni Margarita XYONOU"
+        "name": "Eleni Margarita XYNOU"
     }],
     "require": {
         "twig/twig": "^3.15",

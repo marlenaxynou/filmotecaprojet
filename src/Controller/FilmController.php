@@ -3,75 +3,145 @@
 namespace App\Controller;
 
 use PDO;
+use Twig\Environment;
 
 class FilmController
 {
-    private $twig;
-    private $pdo;
+    private PDO $pdo;
+    private Environment $twig;
 
-    // Constructeur pour injecter Twig et PDO
-    public function __construct($twig, $pdo)
+    public function __construct(PDO $pdo, Environment $twig)
     {
-        $this->twig = $twig;
         $this->pdo = $pdo;
+        $this->twig = $twig;
     }
 
-    // Méthode pour afficher la liste des films
-    public function list(array $queryParams = []): void
+    public function homepage(): void
     {
-        try {
-            // Récupération de tous les films dans la base de données
-            $stmt = $this->pdo->query("SELECT * FROM films");
-            $films = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // Rendu de la vue Twig avec les données des films
-            echo $this->twig->render('films/list.html.twig', ['films' => $films]);
-        } catch (\Exception $e) {
-            // Gestion des erreurs avec un message approprié
-            echo "Une erreur s'est produite lors de la récupération des films : " . $e->getMessage();
-        }
+        $stmt = $this->pdo->query("SELECT * FROM films");
+        $films = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo $this->twig->render('homepage.html.twig', ['films' => $films]);
     }
 
-    // Méthode pour créer un film
+    public function list(): void
+    {
+        $stmt = $this->pdo->query("SELECT * FROM films");
+        $films = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo $this->twig->render('films/list.html.twig', ['films' => $films]);
+    }
+
     public function create(): void
     {
-        echo "Création d'un film";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = $_POST['title'] ?? null;
+            $year = $_POST['year'] ?? null;
+            $type = $_POST['type'] ?? null;
+            $synopsis = $_POST['synopsis'] ?? null;
+            $director = $_POST['director'] ?? null;
+            $createdAt = (new \DateTime())->format('Y-m-d H:i:s');
+
+            if ($title && $year && $type && $synopsis && $director) {
+                try {
+                    $stmt = $this->pdo->prepare("INSERT INTO films (title, year, type, synopsis, director, created_at) VALUES (:title, :year, :type, :synopsis, :director, :created_at)");
+                    $stmt->execute([
+                        'title' => $title,
+                        'year' => $year,
+                        'type' => $type,
+                        'synopsis' => $synopsis,
+                        'director' => $director,
+                        'created_at' => $createdAt,
+                    ]);
+                    echo "Film ajouté avec succès.";
+                } catch (\Exception $e) {
+                    echo "Une erreur s'est produite lors de l'ajout du film : " . $e->getMessage();
+                }
+            } else {
+                echo "Tous les champs sont requis.";
+            }
+        } else {
+            echo $this->twig->render('films/create.html.twig');
+        }
     }
 
-    // Méthode pour lire un film spécifique
     public function read(array $queryParams): void
     {
-        if (!isset($queryParams['id'])) {
-            echo "ID du film manquant";
-            return;
-        }
+        $id = (int) $queryParams['id'];
+        $stmt = $this->pdo->prepare("SELECT * FROM films WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        $film = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        try {
-            $id = (int)$queryParams['id'];
+        if ($film) {
+            echo $this->twig->render('films/detail.html.twig', ['film' => $film]);
+        } else {
+            echo "Film non trouvé.";
+        }
+    }
+
+    public function update(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = (int) ($_POST['id'] ?? 0);
+            $title = $_POST['title'] ?? null;
+            $year = $_POST['year'] ?? null;
+            $type = $_POST['type'] ?? null;
+            $synopsis = $_POST['synopsis'] ?? null;
+            $director = $_POST['director'] ?? null;
+
+            if ($id > 0 && $title && $year && $type && $synopsis && $director) {
+                try {
+                    $stmt = $this->pdo->prepare("UPDATE films SET title = :title, year = :year, type = :type, synopsis = :synopsis, director = :director WHERE id = :id");
+                    $stmt->execute([
+                        'title' => $title,
+                        'year' => $year,
+                        'type' => $type,
+                        'synopsis' => $synopsis,
+                        'director' => $director,
+                        'id' => $id,
+                    ]);
+                    echo "Film mis à jour avec succès.";
+                } catch (\Exception $e) {
+                    echo "Une erreur s'est produite lors de la mise à jour du film : " . $e->getMessage();
+                }
+            } else {
+                echo "Tous les champs sont requis.";
+            }
+        } else {
+            $id = (int) ($_GET['id'] ?? 0);
             $stmt = $this->pdo->prepare("SELECT * FROM films WHERE id = :id");
             $stmt->execute(['id' => $id]);
             $film = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$film) {
+            if ($film) {
+                echo $this->twig->render('films/update.html.twig', ['film' => $film]);
+            } else {
                 echo "Film non trouvé.";
-                return;
             }
-
-            echo $this->twig->render('films/detail.html.twig', ['film' => $film]);
-        } catch (\Exception $e) {
-            echo "Une erreur s'est produite lors de la récupération du film : " . $e->getMessage();
         }
     }
 
-    // Méthode pour mettre à jour un film
-    public function update(): void
-    {
-        echo "Mise à jour d'un film";
-    }
 
-    // Méthode pour supprimer un film
+
     public function delete(): void
     {
-        echo "Suppression d'un film";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = (int) ($_POST['id'] ?? 0);
+            if ($id > 0) {
+                try {
+                    $stmt = $this->pdo->prepare("DELETE FROM films WHERE id = :id");
+                    $stmt->execute(['id' => $id]);
+                    if ($stmt->rowCount() > 0) {
+                        echo "Film supprimé avec succès.";
+                    } else {
+                        echo "Film non trouvé.";
+                    }
+                } catch (\Exception $e) {
+                    echo "Une erreur s'est produite lors de la suppression du film : " . $e->getMessage();
+                }
+            } else {
+                echo "ID du film non valide.";
+            }
+        } else {
+            echo $this->twig->render('films/delete.html.twig');
+        }
     }
 }

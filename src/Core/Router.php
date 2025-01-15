@@ -1,58 +1,64 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Core;
 
 class Router
 {
-    private $twig;
-    private $pdo;
+    private \PDO $pdo;
+    private \Twig\Environment $twig;
 
-    public function __construct($twig, $pdo)
+    public function __construct(\PDO $pdo, \Twig\Environment $twig)
     {
-        $this->twig = $twig;
         $this->pdo = $pdo;
+        $this->twig = $twig;
     }
 
     public function route(): void
     {
-        // Récupère l'URL demandée (sans le domaine et la racine)
         $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        $parts = explode('/', $uri);
+        $route = $parts[0] ?? null;
+        $action = $parts[1] ?? 'index';
 
-        // Découpe l'URI pour obtenir la route et l'action
-        $parts = explode('/', $uri); // Exemple : ['films', 'list']
-        $route = $parts[0] ?? null;   // 'films'
-        $action = $parts[1] ?? 'listFilms'; // 'list' ou par défaut 'listFilms'
-
-        // Récupère les paramètres éventuels de la query string (comme ?id=12&name=Inception)
-        $queryParams = $_GET;
-
-        // Définit les routes et leurs contrôleurs associés
         $routes = [
             'films' => 'FilmController',
             'contact' => 'ContactController',
+            '' => 'HomeController',
         ];
 
         if (array_key_exists($route, $routes)) {
-            // Crée dynamiquement le contrôleur
             $controllerName = 'App\\Controller\\' . $routes[$route];
-
             if (!class_exists($controllerName)) {
                 echo "Controller '$controllerName' not found";
                 return;
             }
 
-            $controller = new $controllerName($this->twig, $this->pdo);
+            // Use reflection to determine the correct argument order
+            $reflection = new \ReflectionClass($controllerName);
+            $constructor = $reflection->getConstructor();
+            $parameters = $constructor->getParameters();
+            $args = [];
+            foreach ($parameters as $parameter) {
+                if ($parameter->getType() && $parameter->getType()->getName() === \PDO::class) {
+                    $args[] = $this->pdo;
+                } elseif ($parameter->getType() && $parameter->getType()->getName() === \Twig\Environment::class) {
+                    $args[] = $this->twig;
+                }
+            }
 
-            // Vérifie si la méthode existe dans le contrôleur
+            // Ensure both arguments are passed
+            if (count($args) !== count($parameters)) {
+                echo "Error: Incorrect number of arguments for '$controllerName' constructor";
+                return;
+            }
+
+            $controller = $reflection->newInstanceArgs($args);
             if (method_exists($controller, $action)) {
-                $controller->$action($queryParams); // Appelle la méthode dynamique correspondant à l'action
+                $controller->$action($_GET);
             } else {
                 echo "Action '$action' not found in $controllerName";
             }
         } else {
-            // Page non trouvée
             echo "404 Not Found";
         }
     }
