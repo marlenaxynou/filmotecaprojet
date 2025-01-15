@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer un Film</title>
+    <link rel="stylesheet" href="/style/style2.css">
+</head>
+
+<body>
+    <header>
+        <h1>Supprimer un Film</h1>
+    </header>
+    <main>
+        <p>Êtes-vous sûr de vouloir supprimer ce film ?</p>
+        <form action="/films/delete" method="post">
+            <input type="hidden" name="id" value="{{ film.id }}">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+            <a href="/films/list" class="btn btn-secondary">Annuler</a>
+        </form>
+    </main>
+</body>
+
+</html>
